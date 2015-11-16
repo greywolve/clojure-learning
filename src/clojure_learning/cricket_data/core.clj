@@ -100,7 +100,7 @@
         first-page         (fetch-page first-page-url)
         total-pages        (get-number-of-pages first-page)
         rest-of-page-urls  (map (partial add-page-to-url url)
-                                (range 2 total-pages))
+                                (range 2 (inc total-pages)))
         rest-of-pages      (map fetch-page rest-of-page-urls)
         all-table-rows     (->> (cons first-page rest-of-pages)
                                 (mapcat (comp table->rows select-data-table-node))
@@ -110,7 +110,9 @@
      :table-rows    all-table-rows}))
 
 (comment
-  (cricket-data cricket-data-url)
+  (def data  (cricket-data cricket-data-url))
+
+  (count (:table-rows data))
 
 )
 
